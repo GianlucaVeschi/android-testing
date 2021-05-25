@@ -9,18 +9,16 @@ class StatisticsUtilsKtTest {
 
     @Test
     fun getActiveAndCompletedStats_noCompleted_returnsHundredZero() {
-
-        // Create an active tasks (the false makes this active)
+        // Given: Create an active tasks (the false makes this active)
         val tasks = listOf<Task>(
                 Task("title", "desc", isCompleted = false)
         )
-        // Call your function
+        // When: Call your function
         val result = getActiveAndCompletedStats(tasks)
 
-        // Check the result
+        // Then: Check the result
         assertThat(result.activeTasksPercent, `is`(100f))
         assertThat(result.completedTasksPercent, `is`(0f))
-
     }
 
 }
