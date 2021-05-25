@@ -13,6 +13,7 @@ class StatisticsUtilsKtTest {
         val tasks = listOf<Task>(
                 Task("title", "desc", isCompleted = false)
         )
+
         // When: Call your function
         val result = getActiveAndCompletedStats(tasks)
 
@@ -20,5 +21,66 @@ class StatisticsUtilsKtTest {
         assertThat(result.activeTasksPercent, `is`(100f))
         assertThat(result.completedTasksPercent, `is`(0f))
     }
+
+    @Test
+    fun `one completed task AND no active tasks`() {
+        //Given
+        val tasks = listOf(
+                Task("Job Application", "Send CV", isCompleted = true)
+        )
+
+        // When: Call your function
+        val result = getActiveAndCompletedStats(tasks)
+
+        //Then
+        assertThat(result.activeTasksPercent, `is`(0f))
+        assertThat(result.completedTasksPercent, `is`(100f))
+    }
+
+    @Test
+    fun `two completed task AND three active tasks`() {
+        //Given
+        val tasks = listOf(
+                Task("Job Application", "Send CV", isCompleted = true),
+                Task("Job Application", "Send Letter", isCompleted = true),
+                Task("Job Application", "Text recruiter", isCompleted = false),
+                Task("Job Application", "Do coding challenge", isCompleted = false),
+                Task("Job Application", "Update excel sheet", isCompleted = false)
+        )
+
+        // When: Call your function
+        val result = getActiveAndCompletedStats(tasks)
+
+        //Then
+        assertThat(result.activeTasksPercent, `is`(60f))
+        assertThat(result.completedTasksPercent, `is`(40f))
+    }
+
+    @Test
+    fun `list of tasks is empty`() {
+        //Given
+        val tasks = emptyList<Task>()
+
+        // When: Call your function
+        val result = getActiveAndCompletedStats(tasks)
+
+        //Then
+        assertThat(result.activeTasksPercent, `is`(0f))
+        assertThat(result.completedTasksPercent, `is`(0f))
+    }
+
+    @Test
+    fun `list of tasks is null`() {
+        //Given
+        val tasks = null
+
+        // When: Call your function
+        val result = getActiveAndCompletedStats(tasks)
+
+        //Then
+        assertThat(result.activeTasksPercent, `is`(0f))
+        assertThat(result.completedTasksPercent, `is`(0f))
+    }
+
 
 }
